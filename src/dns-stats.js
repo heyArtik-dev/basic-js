@@ -25,24 +25,21 @@ const { NotImplementedError } = require('../extensions/index.js');
 function getDNSStats(domains) {
   const dnsCount = {};
 
-  // Loop through each domain
   domains.forEach(domain => {
-      // Split the domain into parts and reverse it
-      const parts = domain.split('.').reverse();
 
-      // Create subdomains
-      let subdomain = '';
-      for (let i = 0; i < parts.length; i++) {
-          // Construct the subdomain
-          subdomain += '.' + parts[i];
+    const parts = domain.split('.').reverse();
 
-          // If the subdomain already exists in the count object, increment it, otherwise initialize to 1
-          if (dnsCount[subdomain]) {
-              dnsCount[subdomain]++;
-          } else {
-              dnsCount[subdomain] = 1;
-          }
+    let subdomain = '';
+    for (let i = 0; i < parts.length; i++) {
+
+      subdomain += '.' + parts[i];
+
+      if (dnsCount[subdomain]) {
+        dnsCount[subdomain]++;
+      } else {
+        dnsCount[subdomain] = 1;
       }
+    }
   });
 
   return dnsCount;
