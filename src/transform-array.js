@@ -17,6 +17,7 @@ function transform(arr) {
   if (!(arr instanceof Array)) throw new Error("'arr' parameter must be an instance of the Array!");
 
   const cloneArr = [...arr];
+  const arrPrefix = ['--double-next', '--double-prev', '--discard-next', '--discard-prev'];
 
   for (let i = 0; i < cloneArr.length; i++) {
     switch (cloneArr[i]) {
@@ -27,15 +28,15 @@ function transform(arr) {
           cloneArr[i - 1] ? cloneArr.splice(i, 1, cloneArr[i - 1]) : cloneArr.splice(i, 1);
         break;
       case '--discard-next':
-          cloneArr[i + 1] ? cloneArr.splice(i, 2) : cloneArr.splice(i, 1);
+          cloneArr[i + 1] ? cloneArr.splice(i + 1, 1) : cloneArr.splice(i, 1);
         break;
       case '--discard-prev':
-          cloneArr[i - 1] ? cloneArr.splice(i - 1, 2) : cloneArr.splice(i, 1);
+          cloneArr[i - 1] ? cloneArr.splice(i - 1, 1) : cloneArr.splice(i, 1);
         break;
     }
   }
 
-  return cloneArr;
+  return cloneArr.filter((n) => !arrPrefix.includes(n));
 
 }
 
