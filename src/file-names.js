@@ -1,5 +1,4 @@
-const { NotImplementedError } = require('../lib');
-
+const { NotImplementedError } = require("../lib");
 /**
  * There's a list of file, since two files cannot have equal names,
  * the one which comes later will have a suffix (k),
@@ -15,11 +14,22 @@ const { NotImplementedError } = require('../lib');
  * the output should be ["file", "file(1)", "image", "file(1)(1)", "file(2)"]
  *
  */
-function renameFiles(/* names */) {
-  // Remove line below and write your code here
-  throw new NotImplementedError('Not implemented');
+function renameFiles(names) {
+  let listFile = {};
+
+  for (let name of names) {
+    if (!listFile[name]) {
+      listFile[name] = 1;
+    } else {
+      let num = listFile[name];
+      listFile[name + `(${num})`] = 1;
+      listFile[name] += 1;
+    }
+  }
+
+  return Object.keys(listFile);
 }
 
 module.exports = {
-  renameFiles
+  renameFiles,
 };

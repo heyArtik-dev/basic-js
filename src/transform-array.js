@@ -1,5 +1,4 @@
-const { NotImplementedError } = require('../lib');
-
+const { NotImplementedError } = require("../lib");
 /**
  * Create transformed array based on the control sequences that original
  * array contains
@@ -13,11 +12,42 @@ const { NotImplementedError } = require('../lib');
  * transform([1, 2, 3, '--discard-prev', 4, 5]) => [1, 2, 4, 5]
  *
  */
-function transform(/* arr */) {
-  // Remove line below and write your code here
-  throw new NotImplementedError('Not implemented');
+function transform(arr) {
+  if (!(arr instanceof Array))
+    throw new Error("'arr' parameter must be an instance of the Array!");
+
+  const cloneArr = [...arr];
+  const arrPrefix = [
+    "--double-next",
+    "--double-prev",
+    "--discard-next",
+    "--discard-prev",
+  ];
+
+  for (let i = 0; i < cloneArr.length; i++) {
+    switch (cloneArr[i]) {
+      case "--double-next":
+        cloneArr[i + 1]
+          ? cloneArr.splice(i, 1, cloneArr[i + 1])
+          : cloneArr.splice(i, 1);
+        break;
+      case "--double-prev":
+        cloneArr[i - 1]
+          ? cloneArr.splice(i, 1, cloneArr[i - 1])
+          : cloneArr.splice(i, 1);
+        break;
+      case "--discard-next":
+        cloneArr[i + 1] ? cloneArr.splice(i + 1, 1) : cloneArr.splice(i, 1);
+        break;
+      case "--discard-prev":
+        cloneArr[i - 1] ? cloneArr.splice(i - 1, 1) : cloneArr.splice(i, 1);
+        break;
+    }
+  }
+
+  return cloneArr.filter((n) => !arrPrefix.includes(n));
 }
 
 module.exports = {
-  transform
+  transform,
 };
